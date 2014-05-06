@@ -30,29 +30,54 @@ void publishTable() {
 bool checkIfWinningComb(unsigned int player) {
 	for (int index = 0; index < 8; index++) {
 		if (winCombinations[index] == (winCombinations[index] & player))
-			 return true;
+			return true;
 	}
 
 	return false;
 }
 
-bool isPositionValid(unsigned int position)
-{
-	if ((position > BOARDSIZE-1) || (position < 0)) {
-		cout << "position out of range!"<<endl<<"Please enter a new correct position.";
+bool isPositionValid(unsigned int position) {
+	if ((position > BOARDSIZE - 1) || (position)) {
+		cout << "position out of range!" << endl
+				<< "Please enter a new correct position.";
 		return false;
 	}
 
-	if (((playerA|playerB)&(1<<position))!=0) {
-		cout << "position already in use!"<<endl<<"Please choose another position.";
-	    return false;
+	if (((playerA | playerB) & (1 << position)) != 0) {
+		cout << "position already in use!" << endl
+				<< "Please choose another position.";
+		return false;
 	}
 
 	return true;
 }
 
-int main()
-{
+//is supposed to run either the Min or the Max depending on which player is to play
+int decision() {
+
+}
+
+//Gets a state as the argument, and it should try all the possible successor combinations, and choose the one with lowest score
+int min() {
+
+}
+
+//Gets a state as the argument, and it should try all the possible successor combinations, and choose the one with most score
+int max() {
+
+}
+
+//gets a state as the argument, and it should return a score for the given state
+int utility(unsigned int playerA, unsigned int playerB) {
+	if (checkIfWinningComb(playerA))
+		return 1;
+	else if (checkIfWinningComb(playerB))
+		return -1;
+	else
+		return 0;
+}
+
+int main() {
 	cout << "!!!Tic Tac Toe!!!" << endl;
 	std::fill_n(board, BOARDSIZE, '-');
 
@@ -64,9 +89,7 @@ int main()
 
 			do {
 				cin >> position;
-			}
-			while(!isPositionValid(position));
-
+			} while (!isPositionValid(position));
 
 			playerA |= (1 << position);
 			board[position] = 'X';
@@ -79,8 +102,7 @@ int main()
 
 			do {
 				cin >> position;
-			}
-			while(!isPositionValid(position));
+			} while (!isPositionValid(position));
 
 			playerB |= (1 << position);
 			board[position] = '0';
