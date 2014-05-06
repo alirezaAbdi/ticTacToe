@@ -30,7 +30,7 @@ void publishTable() {
 bool checkIfWinningComb(unsigned int player) {
 	for (int index = 0; index < 8; index++) {
 		if (winCombinations[index] == (winCombinations[index] & player))
-			return true;
+			 return true;
 	}
 
 	return false;
