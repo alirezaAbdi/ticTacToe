@@ -30,7 +30,7 @@ void publishTable() {
 bool checkIfWinningComb(unsigned int player) {
 	for (int index = 0; index < 8; index++) {
 		if (winCombinations[index] == (winCombinations[index] & player))
-			 return true;
+			return true;
 	}
 
 	return false;
@@ -45,10 +45,17 @@ bool isPositionValid(unsigned int position)
 
 	if (((playerA|playerB)&(1<<position))!=0) {
 		cout << "position already in use!"<<endl<<"Please choose another position.";
-	    return false;
+		return false;
 	}
 
 	return true;
+}
+
+void checkPosition(unsigned int &position) {
+	do {
+		cin >> position;
+	}
+	while(!isPositionValid(position));
 }
 
 int main()
@@ -56,17 +63,13 @@ int main()
 	cout << "!!!Tic Tac Toe!!!" << endl;
 	std::fill_n(board, BOARDSIZE, '-');
 
-	int position = 0;
+	unsigned int position = 0;
 	for (int index = 0; index < BOARDSIZE; index++) {
 
 		if (index % 2 == 0) {
 			cout << "Player A moves to position (0 to 8): ";
 
-			do {
-				cin >> position;
-			}
-			while(!isPositionValid(position));
-
+			checkPosition(position);
 
 			playerA |= (1 << position);
 			board[position] = 'X';
@@ -77,10 +80,7 @@ int main()
 		} else {
 			cout << "Player B moves to position(0 to 8): ";
 
-			do {
-				cin >> position;
-			}
-			while(!isPositionValid(position));
+			checkPosition(position);
 
 			playerB |= (1 << position);
 			board[position] = '0';
@@ -89,6 +89,8 @@ int main()
 				break;
 			}
 		}
+
+		publishTable();
 
 	}
 
